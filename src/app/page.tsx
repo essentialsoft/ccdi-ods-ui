@@ -75,7 +75,12 @@ export default async function Home() {
               className="border rounded-lg p-6"
             >
               <h2 className="text-2xl font-semibold mb-4">
-                {collection.name.charAt(0).toUpperCase() + collection.name.slice(1)}
+                <Link
+                  href={`/collection/${collection.name}`}
+                  className="hover:text-blue-600"
+                >
+                  {collection.name.charAt(0).toUpperCase() + collection.name.slice(1)}
+                </Link>
               </h2>
               <ul className="space-y-2 ml-4">
                 {collection.posts.map((post) => (
