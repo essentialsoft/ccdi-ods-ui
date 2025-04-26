@@ -6,6 +6,7 @@ import remarkRehype from 'remark-rehype';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeSlug from 'rehype-slug';
 import rehypeStringify from 'rehype-stringify';
+import Breadcrumb from '@/components/Breadcrumb';
 
 interface GithubContent {
   content: string;
@@ -51,13 +52,15 @@ async function processMarkdown(content: string) {
 }
 
 export default async function Post(props: PostPageProps) {
-  const params = await props.params; 
+  const params = await props.params;
   const slug = params.slug.join('/');
+  const [collection, page] = params.slug;
   const content = await fetchContent(slug);
   const processedContent = await processMarkdown(content);
 
   return (
     <main className="max-w-4xl mx-auto p-6">
+      <Breadcrumb collection={collection} page={page} />
       <div 
         className="prose lg:prose-xl"
         dangerouslySetInnerHTML={{ __html: processedContent }}
