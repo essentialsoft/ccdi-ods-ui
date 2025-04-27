@@ -35,6 +35,7 @@ async function fetchContent(slug: string) {
   }
 
   const content = await response.text();
+  console.log('Fetched content:', content);
   return content;
 }
 

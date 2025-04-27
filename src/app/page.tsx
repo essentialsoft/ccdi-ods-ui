@@ -4,6 +4,7 @@ interface GithubCollection {
   name: string;
   path: string;
   type: string;
+  posts?: GithubPost[];
 }
 
 interface GithubPost {
@@ -19,7 +20,7 @@ async function fetchCollections() {
       headers: {
         'Accept': 'application/vnd.github.v3+json',
       },
-      next: { revalidate: 3600 } // Revalidate every hour
+      next: { revalidate: 3600 }
     }
   );
 
@@ -59,17 +60,31 @@ export default async function Home() {
     }))
   );
 
+  return <HomeContent collections={collectionsWithPosts} />;
+}
+
+function HomeContent({ collections }: { collections: GithubCollection[] }) {
   return (
     <main className="max-w-4xl mx-auto p-6">
       <h1 className="text-4xl font-bold mb-6">CCDI Documentation</h1>
       
       <div className="prose lg:prose-xl">
+        {/* Simple form that submits to /search */}
+        <form action="/search" method="GET" className="mb-6">
+          <input
+            type="text"
+            name="q" // IMPORTANT: name="q" matches /search?q=...
+            placeholder="Search documentation..."
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </form>
+        
         <p className="text-xl mb-6">
           Browse our documentation collections:
         </p>
         
         <div className="grid gap-6 mt-8">
-          {collectionsWithPosts.map((collection) => (
+          {collections.map((collection) => (
             <article 
               key={collection.name}
               className="border rounded-lg p-6"
@@ -83,7 +98,7 @@ export default async function Home() {
                 </Link>
               </h2>
               <ul className="space-y-2 ml-4">
-                {collection.posts.map((post) => (
+                {collection.posts?.map((post) => (
                   <li key={post.path}>
                     <Link 
                       href={`/post/${collection.name}/${post.name.replace('.md', '')}`}
