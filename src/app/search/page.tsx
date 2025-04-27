@@ -1,6 +1,6 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import Fuse from 'fuse.js';
 
@@ -91,7 +91,7 @@ async function fetchPosts(collectionPath: string): Promise<GithubPost[]> {
 // ==========================
 // SearchPage Component
 // ==========================
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
   const [collections, setCollections] = useState<GithubCollection[]>([]);
@@ -201,5 +201,13 @@ export default function SearchPage() {
         </div>
       )}
     </main>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<div className="max-w-4xl mx-auto p-6">Loading...</div>}>
+      <SearchContent />
+    </Suspense>
   );
 }

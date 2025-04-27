@@ -53,12 +53,6 @@ function rehypeCustomTheme2() {
 }
 
 
-interface PostPageProps {
-  params: {
-    slug: string[];
-  };
-}
-
 async function fetchContent(slug: string) {
   const response = await fetch(
     `https://api.github.com/repos/CBIIT/ccdi-ods-content/contents/pages/${slug}.md`,
@@ -75,7 +69,6 @@ async function fetchContent(slug: string) {
   }
 
   const content = await response.text();
-  console.log('Fetched content:', content);
   return content;
 }
 
@@ -105,9 +98,9 @@ function extractHeadings(content: string): { id: string; text: string }[] {
   
   return headings;
 }
-
-export default async function Post(props: PostPageProps) {
-  const params = await props.params;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default async function Post(props: any) {
+  const { params } = props;
   const slug = params.slug.join('/');
   const [collection, page] = params.slug;
   const content = await fetchContent(slug);

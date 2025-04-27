@@ -6,12 +6,6 @@ interface GithubContent {
   sha: string;
 }
 
-interface PostPageProps {
-  params: {
-    slug: string[];
-  };
-}
-
 async function fetchGithubPosts(slug: string) {
   const response = await fetch(
     `https://api.github.com/repos/CBIIT/ccdi-ods-content/contents/pages/${slug}`,
@@ -37,8 +31,9 @@ async function fetchGithubPosts(slug: string) {
     }));
 }
 
-export default async function PostsList(props : PostPageProps) {
-  const params = await props.params; 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default async function PostsList(props : any) {
+  const { params } = props;
   const slug = params.slug.join('/');
   const posts = await fetchGithubPosts(slug);
 
