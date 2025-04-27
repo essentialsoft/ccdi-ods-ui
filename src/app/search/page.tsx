@@ -129,11 +129,11 @@ export default function SearchPage() {
   const fuse = new Fuse(allPosts, {
     keys: ['name','content'],
     includeScore: true,
-    threshold: 0.3,
+    threshold: 0.2,
     ignoreLocation: true,
+    shouldSort: true, 
+    findAllMatches: true,
     useExtendedSearch: true,
-    minMatchCharLength: 2,
-    shouldSort: true,
   });
 
   const searchResults = query ? fuse.search(query) : [];
@@ -159,6 +159,16 @@ export default function SearchPage() {
           ← Back to Home
         </Link>
       </div>
+
+      <form action="/search" method="GET" className="mb-6">
+        <input
+          type="text"
+          name="q"
+          placeholder="Search documentation..."
+          defaultValue={query}
+          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </form>
 
       <h1 className="text-4xl font-bold mb-6">Search Results</h1>
       <p className="mb-6">Showing results for: "{query}"</p>
