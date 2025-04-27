@@ -12,6 +12,7 @@ import Breadcrumb from '@/components/Breadcrumb';
 
 
 function rehypeCustomTheme() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (tree: any) => {
     visit(tree, 'element', (node) => {
       if (node.tagName === 'h1') {
@@ -32,6 +33,7 @@ function rehypeCustomTheme() {
 
 
 function rehypeCustomTheme2() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (tree: any) => {
     visit(tree, 'element', (node) => {
       if (node.tagName === 'h1') {
@@ -50,12 +52,6 @@ function rehypeCustomTheme2() {
   };
 }
 
-
-
-interface GithubContent {
-  content: string;
-  encoding: string;
-}
 
 interface PostPageProps {
   params: {

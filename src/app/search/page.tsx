@@ -171,7 +171,7 @@ export default function SearchPage() {
       </form>
 
       <h1 className="text-4xl font-bold mb-6">Search Results</h1>
-      <p className="mb-6">Showing results for: "{query}"</p>
+      <p className="mb-6">Showing results for: &quot;{query}&quot;</p>
 
       {Object.keys(groupedResults).length === 0 ? (
         <p>No results found.</p>
