@@ -6,7 +6,51 @@ import remarkRehype from 'remark-rehype';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeSlug from 'rehype-slug';
 import rehypeStringify from 'rehype-stringify';
+import { visit } from 'unist-util-visit';
 import Breadcrumb from '@/components/Breadcrumb';
+
+
+
+function rehypeCustomTheme() {
+  return (tree: any) => {
+    visit(tree, 'element', (node) => {
+      if (node.tagName === 'h1') {
+        node.properties = node.properties || {};
+        node.properties.className = ['text-4xl', 'font-bold', 'my-6'];
+      }
+      if (node.tagName === 'p') {
+        node.properties = node.properties || {};
+        node.properties.className = ['text-base', 'leading-7', 'mb-4'];
+      }
+      if (node.tagName === 'a') {
+        node.properties = node.properties || {};
+        node.properties.className = ['text-blue-500', 'hover:underline'];
+      }
+    });
+  };
+}
+
+
+function rehypeCustomTheme2() {
+  return (tree: any) => {
+    visit(tree, 'element', (node) => {
+      if (node.tagName === 'h1') {
+        node.properties = node.properties || {};
+        node.properties.className = ['text-4xl', 'font-bold', 'my-6', 'text-blue-700'];
+      }
+      if (node.tagName === 'p') {
+        node.properties = node.properties || {};
+        node.properties.className = ['text-base', 'leading-7', 'mb-4'];
+      }
+      if (node.tagName === 'a') {
+        node.properties = node.properties || {};
+        node.properties.className = ['text-blue-500', 'hover:underline'];
+      }
+    });
+  };
+}
+
+
 
 interface GithubContent {
   content: string;
@@ -39,11 +83,13 @@ async function fetchContent(slug: string) {
   return content;
 }
 
-async function processMarkdown(content: string) {
+async function processMarkdown(content: string, slug: string) {
+  const theme = slug.split('/')[0] === 'program' ? rehypeCustomTheme : rehypeCustomTheme2;
   const result = await unified()
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkRehype)
+    .use(theme)
     .use(rehypeSlug)
     .use(rehypeHighlight)
     .use(rehypeStringify)
@@ -69,7 +115,7 @@ export default async function Post(props: PostPageProps) {
   const slug = params.slug.join('/');
   const [collection, page] = params.slug;
   const content = await fetchContent(slug);
-  const processedContent = await processMarkdown(content);
+  const processedContent = await processMarkdown(content, slug);
   const headings = extractHeadings(processedContent);
 
   return (
