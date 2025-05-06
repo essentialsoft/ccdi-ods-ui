@@ -3,7 +3,7 @@
 import styled from 'styled-components';
 import { useRouter, usePathname } from 'next/navigation';
 import Logo from './components/LogoDesktop';
-// import SearchBar from './components/SearchBarDesktop';
+import SearchBar from './components/SearchBarDesktop';
 import NavBar from './components/NavbarDesktop';
 
 const HeaderBanner = styled.div`
@@ -39,7 +39,7 @@ const Header = () => {
       <HeaderContainer>
         <Logo />
         <div className="headerLowerContainer">
-          {/* { path !== "/sitesearch" && <div className="searchBarArea"><SearchBar /></div> } */}
+           <div className="searchBarArea"><SearchBar /></div>
         </div>
       </HeaderContainer>
       <div className="navbarContainer"><NavBar /></div>

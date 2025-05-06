@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useRouter } from 'next/router'; // Updated import
-import clearIcon from '../../../assets/header/Clear_Icon.svg';
+import { useRouter } from 'next/navigation'; // Updated to new navigation import
+import clearIcon from '../../../../assets/header/Clear_Icon.svg';
 
 const SearchBarContainer = styled.div`
     display: flex;
@@ -76,7 +76,7 @@ const SearchInput = styled.input`
 `;
 
 const SearchBar = () => {
-  const router = useRouter(); // Updated hook
+  const router = useRouter();
   const [localText, setLocalText] = useState("");
 
   const handleTextInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,15 +85,17 @@ const SearchBar = () => {
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      router.push(`/sitesearch/${localText.trim()}`); // Updated navigation logic
+    if (event.key === "Enter" && localText.trim()) {
+      router.push(`/search?q=${encodeURIComponent(localText.trim())}`);
       setLocalText("");
     }
   };
 
   const handleSearch = () => {
-    router.push(`/sitesearch/${localText.trim()}`); // Updated navigation logic
-    setLocalText("");
+    if (localText.trim()) {
+      router.push(`/search?q=${encodeURIComponent(localText.trim())}`);
+      setLocalText("");
+    }
   };
 
   return (

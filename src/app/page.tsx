@@ -78,56 +78,6 @@ function HomeContent({ collections }: { collections: Collection[] }) {
       <DataSharingGuidance />
       <DataSharingProcess />
       <DataSharingResources />
-
-      <div className="max-w-4xl mx-auto p-6">
-        <h1 className="text-4xl font-bold mb-6">CCDI Documentation</h1>
-        
-        <div className="prose lg:prose-xl">
-          {/* Simple form that submits to /search */}
-          <form action="/search" method="GET" className="mb-6">
-            <input
-              type="text"
-              name="q" // IMPORTANT: name="q" matches /search?q=...
-              placeholder="Search documentation..."
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </form>
-          
-          <p className="text-xl mb-6">
-            Browse our documentation collections:
-          </p>
-          
-          <div className="grid gap-6 mt-8">
-            {collections.map((collection) => (
-              <article 
-                key={collection.name}
-                className="border rounded-lg p-6"
-              >
-                <h2 className="text-2xl font-semibold mb-4">
-                  <Link
-                    href={`/collection/${collection.name}`}
-                    className="hover:text-blue-600"
-                  >
-                    {collection.name.charAt(0).toUpperCase() + collection.name.slice(1)}
-                  </Link>
-                </h2>
-                <ul className="space-y-2 ml-4">
-                  {collection.posts?.map((post) => (
-                    <li key={post.path}>
-                      <Link 
-                        href={`/post/${collection.name}/${post.name.replace('.md', '')}`}
-                        className="text-blue-600 hover:text-blue-800"
-                      >
-                        {post.name.replace('.md', '').replace(/-/g, ' ')}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-        </div>
-      </div>
     </main>
   );
 }

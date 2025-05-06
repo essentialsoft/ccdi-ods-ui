@@ -4,7 +4,21 @@ import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 
-import { navMobileList, navbarSublists } from '../../../config/globalHeaderData';
+interface NavItem {
+  name: string;
+  link: string;
+  external?: boolean;
+  id: string;
+  className: string;
+  text?: string;
+}
+
+interface NavigationData {
+  navList: NavItem[];
+  navbarSublists: {
+    [key: string]: NavItem[];
+  };
+}
 
 const Nav = styled.div`
     top: 0;
@@ -249,18 +263,40 @@ const useOutsideAlerter = (ref: React.RefObject<HTMLDivElement | null>) => {
 };
 
 const NavBar = () => {
-  const [clickedTitle, setClickedTitle] = useState<keyof typeof navbarSublists | "">("");
+  const [navigationData, setNavigationData] = useState<NavigationData | null>(null);
+  const [clickedTitle, setClickedTitle] = useState<string>("");
   const dropdownSelection = useRef<HTMLDivElement>(null);
-  const clickableObject = navMobileList.filter((item) => item.className === 'navMobileItem clickable');
-  const clickableTitle = clickableObject.map((item) => item.name);
+
+  useEffect(() => {
+    const fetchNavigationData = async () => {
+      try {
+        const response = await fetch('https://api.github.com/repos/CBIIT/ccdi-ods-content/contents/config/navigation.json');
+        const data = await response.json();
+        const content = JSON.parse(atob(data.content));
+        setNavigationData(content);
+      } catch (error) {
+        console.error('Error fetching navigation data:', error);
+      }
+    };
+
+    fetchNavigationData();
+  }, []);
+
   useOutsideAlerter(dropdownSelection);
+
+  if (!navigationData) {
+    return <Nav><NavContainer>Loading...</NavContainer></Nav>;
+  }
+
+  const clickableObject = navigationData.navList.filter((item) => item.className === 'navMobileItem clickable');
+  const clickableTitle = clickableObject.map((item) => item.name);
 
   const handleMenuClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
     if (target.innerText === clickedTitle || !clickableTitle.includes(target.innerText)) {
       setClickedTitle("");
     } else {
-      setClickedTitle(target.innerText as keyof typeof navbarSublists | "");
+      setClickedTitle(target.innerText);
     }
   };
 
@@ -269,37 +305,26 @@ const NavBar = () => {
       handleMenuClick(e as unknown as React.MouseEvent<HTMLDivElement>);
     }
   };
-  type NavSubLinkData = {
-    name: string;
-    link: string;
-    className: string;
-    id?: string;
-    text?: string;
-  };
 
-  function shouldBeUnderlined(item: NavSubLinkData): boolean {
+  function shouldBeUnderlined(item: NavItem): boolean {
     const linkName = item.name;
     const correctPath = typeof window !== 'undefined' ? window.location.pathname : '';
     if (item.className === "navMobileItem") {
       return correctPath === item.link;
     }
-    if (!(linkName in navbarSublists)) {
+    if (!(linkName in navigationData.navbarSublists)) {
       return false;
     }
-    const linkNames = Object.values(navbarSublists[linkName as keyof typeof navbarSublists]).map((e: NavSubLinkData) => e.link);
+    const linkNames = navigationData.navbarSublists[linkName].map(e => e.link);
     return linkNames.includes(correctPath);
   }
-
-  useEffect(() => {
-    setClickedTitle("");
-  }, []);
 
   return (
     <Nav>
       <NavContainer>
         <UlContainer>
           {
-            navMobileList.map((navMobileItem, idx) => {
+            navigationData.navList.map((navMobileItem, idx) => {
               const navkey = `nav_${idx}`;
               return (
                 navMobileItem.className === 'navMobileItem'
@@ -346,7 +371,7 @@ const NavBar = () => {
         <DropdownContainer>
           <div className="dropdownList">
             {
-              clickedTitle !== "" ? navbarSublists[clickedTitle]?.map((dropItem, idx) => {
+              clickedTitle !== "" && navigationData.navbarSublists[clickedTitle]?.map((dropItem, idx) => {
                 const dropkey = `drop_${idx}`;
                 return (
                   dropItem.link && (
@@ -364,7 +389,6 @@ const NavBar = () => {
                   )
                 );
               })
-                : null
             }
           </div>
         </DropdownContainer>
