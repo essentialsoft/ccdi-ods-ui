@@ -312,10 +312,10 @@ const NavBar = () => {
     if (item.className === "navMobileItem") {
       return correctPath === item.link;
     }
-    if (!(linkName in navigationData.navbarSublists)) {
+    if (!(linkName in (navigationData as NavigationData).navbarSublists)) {
       return false;
     }
-    const linkNames = navigationData.navbarSublists[linkName].map(e => e.link);
+    const linkNames = navigationData!.navbarSublists[linkName].map(e => e.link);
     return linkNames.includes(correctPath);
   }
 

@@ -1,7 +1,6 @@
 'use client';
 
 import styled from 'styled-components';
-import { useRouter, usePathname } from 'next/navigation';
 import Logo from './components/LogoDesktop';
 import SearchBar from './components/SearchBarDesktop';
 import NavBar from './components/NavbarDesktop';
@@ -31,8 +30,6 @@ const HeaderContainer = styled.div`
 `;
 
 const Header = () => {
-  const router = useRouter();
-  const path = usePathname();
 
   return (
     <HeaderBanner role="banner">

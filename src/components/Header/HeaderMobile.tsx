@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link'; // Updated import
-import { useRouter, usePathname } from 'next/navigation';
 import styled from 'styled-components';
 import Logo from "./components/LogoMobile";
 import menuClearIcon from '../../../assets/header/Menu_Cancel_Icon.svg';
@@ -151,8 +150,6 @@ const MenuArea = styled.div`
 `;
 
 const Header = () => {
-  const router = useRouter(); // Updated hook
-  const path = usePathname(); // Updated logic
   const [navMobileDisplay, setNavMobileDisplay] = useState('none');
   const [navbarMobileList, setNavbarMobileList] = useState(navMobileList);
 

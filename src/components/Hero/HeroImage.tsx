@@ -2,7 +2,8 @@ import React from 'react';
 
 interface HeroImageProps {
   src: string;
-  alt?: string;
+  alt: string;
+  className?: string;
 }
 
 export const HeroImage: React.FC<HeroImageProps> = ({ src, alt = "Hero illustration" }) => {
