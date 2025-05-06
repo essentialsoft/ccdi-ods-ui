@@ -9,15 +9,13 @@ import rehypeStringify from 'rehype-stringify';
 import { visit } from 'unist-util-visit';
 import Breadcrumb from '@/components/Breadcrumb';
 
-
-
 function rehypeCustomTheme() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (tree: any) => {
     visit(tree, 'element', (node) => {
       if (node.tagName === 'h1') {
         node.properties = node.properties || {};
-        node.properties.className = ['text-4xl', 'font-bold', 'my-6'];
+        node.properties.className = ['text-4xl', 'font-bold', 'my-6', 'text-[#49B5B1]'];
       }
       if (node.tagName === 'p') {
         node.properties = node.properties || {};
@@ -30,7 +28,6 @@ function rehypeCustomTheme() {
     });
   };
 }
-
 
 function rehypeCustomTheme2() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -38,7 +35,7 @@ function rehypeCustomTheme2() {
     visit(tree, 'element', (node) => {
       if (node.tagName === 'h1') {
         node.properties = node.properties || {};
-        node.properties.className = ['text-4xl', 'font-bold', 'my-6', 'text-blue-700'];
+        node.properties.className = ['text-4xl', 'font-bold', 'my-6', 'text-[#49B5B1]'];
       }
       if (node.tagName === 'p') {
         node.properties = node.properties || {};
@@ -51,7 +48,6 @@ function rehypeCustomTheme2() {
     });
   };
 }
-
 
 async function fetchContent(slug: string) {
   const response = await fetch(
@@ -108,42 +104,34 @@ export default async function Post(props: any) {
   const headings = extractHeadings(processedContent);
 
   return (
-    <div className="flex">
-      {/* Side Navigation */}
-      <nav className="w-64 h-screen flex flex-col sticky top-0 border-r">
-        <h2 className="p-6 text-lg font-semibold border-b bg-white">Table of Contents</h2>
-        <div className="overflow-y-auto p-6">
-          <ul className="space-y-2">
-            {headings.map((heading) => (
-              <li key={heading.id}>
-                <a
-                  href={`#${heading.id}`}
-                  className="text-blue-500 hover:underline block"
-                >
-                  {heading.text}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </nav>
-
-      {/* Main Content */}
-      <main className="flex-1 max-w-4xl p-6">
-        <Breadcrumb collection={collection} page={page} />
-        <div 
-          className="prose lg:prose-xl"
-          dangerouslySetInnerHTML={{ __html: processedContent }}
-        />
-        <div className="mt-6">
-          <Link 
-            href="/" 
-            className="text-blue-500 hover:underline"
-          >
-            ← Back to home
-          </Link>
-        </div>
-      </main>
+    <div className="flex flex-col items-stretch px-20 pb-14 pt-3 max-md:px-5 max-w-[1444px] mx-auto min-h-screen">
+      <Breadcrumb collection={collection} page={page} />
+      <div className="flex flex-row gap-8 relative">
+        {/* Side Navigation */}
+        <nav className="mt-10 w-64 flex-shrink-0 sticky top-10 max-h-[calc(100vh-45rem)] overflow-y-auto">
+          <div className="border-l-[2.25px] border-[#49B5B1] p-4">
+            <ul className="space-y-3 pl-4">
+              {headings.map((heading) => (
+                <li key={heading.id}>
+                  <a
+                    href={`#${heading.id}`}
+                    className="text-gray-600 hover:text-blue-600 text-sm block transition-colors"
+                  >
+                    {heading.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </nav>
+        {/* Main Content */}
+        <main className="flex-1 max-w-4xl p-6">
+          <div 
+            className="prose lg:prose-xl"
+            dangerouslySetInnerHTML={{ __html: processedContent }}
+          />
+        </main>
+      </div>
     </div>
   );
 }
