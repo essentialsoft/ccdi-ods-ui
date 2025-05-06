@@ -73,8 +73,8 @@ function HomeContent({ collections }: { collections: Collection[] }) {
   return (
     <main>
       <Hero />
-      <Gallery />
       <Banner />
+      <Gallery />
       <DataSharingGuidance />
       <DataSharingProcess />
       <DataSharingResources />

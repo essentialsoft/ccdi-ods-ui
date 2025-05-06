@@ -34,17 +34,17 @@ export const DataSharingGuidance: React.FC = () => {
   ];
 
   return (
-    <section className="max-w-none flex flex-col items-start bg-white mx-auto px-[82px] py-[47px] max-md:max-w-[991px] max-md:p-[30px] max-sm:max-w-screen-sm max-sm:p-5">
+    <section className="flex flex-col items-stretch items-center px-20 py-14 max-md:px-5 max-w-[1444px] mx-auto" >
       <h2 className="text-[32px] font-semibold text-[#7B3D7D] mb-[38px] max-md:text-[28px] max-sm:text-2xl">
         Data Sharing Guidance
       </h2>
-      <div className="flex gap-[39px] max-sm:flex-col max-sm:items-center">
+      <div className="flex gap-[39px] max-sm:flex-col max-sm:items-center ml-2.5 mb-4">
         <div className="flex flex-col gap-5">
           {leftColumnLinks.map((link, index) => (
             <GuidanceLink key={index} text={link.text} href={link.href} />
           ))}
         </div>
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 ml-2.5 mb-4">
           {rightColumnLinks.map((link, index) => (
             <GuidanceLink key={index} text={link.text} href={link.href} />
           ))}

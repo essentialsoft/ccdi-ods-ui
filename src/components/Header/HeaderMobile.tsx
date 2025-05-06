@@ -48,10 +48,6 @@ const HeaderContainer = styled.div`
         cursor: pointer;
     }
 
-    // .menuButton:active {
-    //     outline: 0.25rem solid #2491ff;
-    //     outline-offset: 0.25rem
-    // }
 `;
 
 const NavMobileContainer = styled.div<{ $display?: string; }>`
@@ -95,10 +91,7 @@ const MenuArea = styled.div`
         cursor: pointer;
     }
 
-    // .closeIconImg:active {
-    //     outline: 0.25rem solid #2491ff;
-    //     outline-offset: 0.5rem
-    // }
+ 
 
     .backButton {
         font-family: Open Sans;
@@ -144,9 +137,6 @@ const MenuArea = styled.div`
         background-color: #f9f9f7;
     }
 
-    // .navMobileItem:active {
-    //     outline: 0.25rem solid #2491ff;
-    // }
 
     .SubItem {
         padding-left: 24px;
@@ -211,7 +201,7 @@ const Header = () => {
               }}
               onClick={() => setNavMobileDisplay('none')}
             >
-              <img className="closeIconImg" src={menuClearIcon} alt="menuClearButton" />
+              <img className="closeIconImg" src={menuClearIcon.src} alt="menuClearButton" />
 
             </div>
             {navbarMobileList !== navMobileList && (

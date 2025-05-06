@@ -21,7 +21,7 @@ const BannerContainer = styled.div`
   }
 
   .text{
-    font-family: 'Open Sans';
+    font-family: var(--font-open-sans);
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
@@ -38,7 +38,7 @@ const BannerContainer = styled.div`
 const USABanner = () => (
   <BannerArea aria-label="USA Banner">
     <BannerContainer>
-      <img src={headerData.usaFlagSmall} alt={headerData.usaFlagSmallAltText} />
+      <img src={headerData.usaFlagSmall.src} alt={headerData.usaFlagSmallAltText} />
       <div className="text">
         An official website of the United States government
       </div>

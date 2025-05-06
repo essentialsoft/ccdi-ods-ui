@@ -17,7 +17,7 @@ const SearchBarContainer = styled.div`
 
     .searchButton {
       height: 32px;
-      font-family: Open Sans;
+      font-family: var(--font-open-sans);
       font-weight: 700;
       font-size: 1rem;
       line-height: 33px;
@@ -43,7 +43,7 @@ const SearchInput = styled.input`
   margin: -1px 0 0 -1px;
   padding: 0 7px;
   border: none;
-  font-family: Open Sans;
+  font-family: var(--font-open-sans);
   font-weight: 400;
   font-size: 1rem;
   line-height: 42px;

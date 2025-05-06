@@ -18,7 +18,7 @@ const SearchBarContainer = styled.div`
 
     .searchButton {
       height: 43px;
-      font-family: Open Sans;
+      font-family: var(--font-open-sans);
       font-weight: 700;
       font-size: 1rem;
       line-height: 33px;
@@ -121,7 +121,7 @@ const SearchBar = () => {
         onKeyDown={handleKeyPress}
         onClick={handleSearch}
       >
-        <img src={searchIcon} alt="searchIcon" />
+        <img src={searchIcon.src} alt="searchIcon" />
       </div>
     </SearchBarContainer>
   );

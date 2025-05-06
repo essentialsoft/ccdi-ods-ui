@@ -1,4 +1,3 @@
-import { text } from 'stream/consumers';
 import Logo from '../../assets/header/Portal_Logo.svg';
 import LogoSmall from '../../assets/header/Portal_Logo_Small.svg';
 import searchbarIcon from '../../assets/header/Search_Icon.svg';

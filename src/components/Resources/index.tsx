@@ -49,7 +49,7 @@ const resourcesData: ResourceData[] = [
 
 export const DataSharingResources: React.FC = () => {
   return (
-    <section aria-labelledby="data-sharing-title" className="flex flex-col gap-10 bg-[#323032] px-20 py-10 max-md:p-[30px] max-sm:p-5">
+    <section aria-labelledby="data-sharing-title" className="flex flex-col gap-10 bg-[#323032] px-20 py-10 max-md:p-[30px] max-sm:p-5 max-w-[1444px] mx-auto" >
       <h2 
         id="data-sharing-title"
         className="text-white text-[35px] font-semibold leading-[38px] max-sm:text-[28px] max-sm:leading-8"

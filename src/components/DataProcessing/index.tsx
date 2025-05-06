@@ -8,7 +8,7 @@ export const DataSharingProcess: React.FC = () => {
   ];
 
   return (
-    <section className="flex flex-col items-stretch w-full max-w-6xl mx-auto my-8">
+    <section className="flex flex-col items-stretch items-center px-20 py-14 max-md:px-5 max-w-[1444px] mx-auto" >
       <h2 className="text-[rgba(0,117,106,1)] text-[32px] font-semibold leading-none ml-2.5 mb-4">
         Data Sharing Process
       </h2>

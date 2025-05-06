@@ -10,7 +10,7 @@ const Banner: React.FC = () => {
     >
       <h2
         id="hero-title"
-        className="text-white text-xl font-normal leading-[1.4] text-center max-md:max-w-full"
+        className="text-white text-xl font-normal leading-[1.4] text-center max-md:max-w-full pt-[100px]"
       >
         NCI ODS Supports Broad Data Sharing in 3 Ways
       </h2>

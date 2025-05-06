@@ -22,7 +22,7 @@ const FooterContainer = styled.div`
 const FooterEmailSignupContainer = styled.form`
   padding: 1rem 1rem 2rem 1rem;
   .signUpTitle {
-    font-family: poppins;
+    font-family: var(--font-poppins);
     font-weight: 700;
     font-size: 22.88px;
     line-height: 34px;
@@ -31,7 +31,7 @@ const FooterEmailSignupContainer = styled.form`
   }
 
   .enterTitle {
-    font-family: Open Sans;
+    font-family: var(--font-open-sans);
     font-weight: 400;
     font-size: 16px;
     line-height: 22px;
@@ -44,6 +44,8 @@ const FooterEmailSignupContainer = styled.form`
     height: 47px;
     font-size: 25px;
     padding-left: 8px;
+     margin-top: 8px;
+    background:#fff; 
   }
 
   .signUpInputBox:focus {
@@ -56,7 +58,7 @@ const FooterEmailSignupContainer = styled.form`
     border-radius: 8px;
     border: 0;
     padding: 9px 16px;
-    font-family: Open Sans;
+    font-family: var(--font-open-sans);
     font-weight: 700;
     font-size: 16px;
     line-height: 22px;
@@ -94,7 +96,7 @@ const FooterLinksContainer = styled.div`
   }
 
   .footItemTitle {
-    font-family: Open Sans;
+    font-family: var(--font-open-sans);
     color: #FFFFFF;
     font-weight: 700;
     font-size: 16px;
@@ -108,7 +110,7 @@ const FooterLinksContainer = styled.div`
   }
 
   .footItemLink {
-    font-family: Open Sans;
+    font-family: var(--font-open-sans);
     color: #FFFFFF;
     font-weight: 400;
     font-size: 16px;
@@ -127,7 +129,7 @@ const FooterLinksContainer = styled.div`
     text-align: left;
     background-color: #1B496E;
     width: 100%;
-    font-family: 'Open Sans';
+    font-family: var(--font-open-sans);
     font-style: normal;
     font-weight: 700;
     font-size: 16px;
@@ -208,7 +210,7 @@ const BottomFooter = styled.div`
   }
 
   .logoUpperText {
-    font-family: poppins;
+    font-family: var(--font-poppins);
     font-weight: 700;
     font-size: 24.96px;
     line-height: 37px;
@@ -216,14 +218,14 @@ const BottomFooter = styled.div`
   }
 
   .logoLowerText {
-    font-family: poppins;
+    font-family: var(--font-poppins);
     font-weight: 400;
     font-size: 18.72px;
     color: #FFFFFF;
   }
 
   #bottom-footer-contact-us {
-    font-family: 'Poppins';
+    font-family: var(--font-poppins);
     font-style: normal;
     font-weight: 700;
     font-size: 22.88px;
@@ -235,7 +237,7 @@ const BottomFooter = styled.div`
   }
 
   #bottom-footer-contact-links {
-    font-family: 'Open Sans';
+    font-family: var(--font-open-sans);
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -255,7 +257,7 @@ const BottomFooter = styled.div`
 
 
   #bottom-footer-follow-us {
-    font-family: 'Poppins';
+    font-family: var(--font-poppins);
     font-style: normal;
     font-weight: 700;
     font-size: 22.88px;
@@ -267,6 +269,7 @@ const BottomFooter = styled.div`
 
   #bottom-footer-follow-us-links {
     margin-top: 1rem;
+     display: flex;
   }
 
   .bottom-footer-social-media-imgs {
@@ -280,7 +283,7 @@ const BottomFooter = styled.div`
   #bottom-footer-gov-links a {
     text-decoration: none;
     display: block;
-    font-family: 'Open Sans';
+    font-family: var(--font-open-sans);
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -423,7 +426,7 @@ const FooterMobile = () => {
                   FooterData.followUs_links.map((followItem, followidx) => {
                     const followkey = `follow_${followidx}`;
                     return (
-                      <a key={followkey} className={followidx !== 0 ? "bottom-footer-social-media-imgs" : ""} href={followItem.link} target="_blank" rel="noopener noreferrer"><img src={followItem.img} alt={followItem.description} /></a>
+                      <a key={followkey} className={followidx !== 0 ? "bottom-footer-social-media-imgs" : ""} href={followItem.link} target="_blank" rel="noopener noreferrer"><img src={followItem.img.src} alt={followItem.description} /></a>
                     );
                   })
                 }

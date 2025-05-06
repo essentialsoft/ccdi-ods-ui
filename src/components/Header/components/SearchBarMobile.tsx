@@ -18,7 +18,7 @@ const SearchBarContainer = styled.div`
 
     .searchButton {
       height: 43px;
-      font-family: Open Sans;
+      font-family: var(--font-open-sans);
       font-weight: 700;
       font-size: 1rem;
       line-height: 33px;
@@ -118,7 +118,7 @@ const SearchBar = () => {
           <SearchInput id="header-search-bar" type="search" value={localText} placeholder="" onChange={handleTextInputChange} onKeyDown={handleKeyPress} />
         </label>
       </div>
-      <div role="button" tabIndex={0} className="searchButton" onKeyDown={handleKeyPress} onClick={handleSearch}><img src={searchIcon} alt="searchIcon" /></div>
+      <div role="button" tabIndex={0} className="searchButton" onKeyDown={handleKeyPress} onClick={handleSearch}><img src={searchIcon.src} alt="searchIcon" /></div>
     </SearchBarContainer>
   );
 };

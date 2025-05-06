@@ -20,7 +20,7 @@ const LogoArea = styled.div`
 const Logo = () => (
   <LogoArea>
     <a id="header-logo-home-link" className="logoContainer" href={headerData.globalHeaderLogoLink}>
-      <img src={headerData.globalHeaderLogo} alt={headerData.globalHeaderLogoAltText} />
+      <img src={headerData.globalHeaderLogo.src} alt={headerData.globalHeaderLogoAltText} />
     </a>
   </LogoArea>
 );

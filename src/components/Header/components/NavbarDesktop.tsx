@@ -58,7 +58,7 @@ const LiSection = styled.li`
   .navTitle {
     display: block;
     color: #585C65;
-    font-family: poppins;
+    font-family: var(--font-poppins);
     font-size: 17px;
     font-weight: 700;
     line-height: 40px;
@@ -157,7 +157,7 @@ const LiSection = styled.li`
   .navTitleClicked {
     display: block;
     color: #FFFFFF;
-    font-family: poppins;
+    font-family: var(--font-poppins);
     font-size: 17px;
     font-weight: 700;
     line-height: 40px;
@@ -198,7 +198,7 @@ const DropdownContainer = styled.div`
     .dropdownItem {
       padding: 0 10px 52px 10px;
       text-align: left;
-      font-family: 'Poppins';
+      font-family: var(--font-poppins);
       font-weight: 600;
       font-style: normal;
       font-size: 20px;
@@ -213,7 +213,7 @@ const DropdownContainer = styled.div`
 
   .dropdownItemText {
     margin-top: 5px;
-    font-family: 'Open Sans';
+    font-family: var(--font-open-sans);
     font-style: normal;
     font-weight: 400;
     font-size: 16.16px;
@@ -279,7 +279,7 @@ const NavBar = () => {
 
   function shouldBeUnderlined(item: NavSubLinkData): boolean {
     const linkName = item.name;
-    const correctPath = window.location.pathname;
+    const correctPath = typeof window !== 'undefined' ? window.location.pathname : '';
     if (item.className === "navMobileItem") {
       return correctPath === item.link;
     }
