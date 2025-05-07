@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import clearIcon from '../../../assets/header/Clear_Icon.svg';
 import searchIcon from '../../../assets/header/Search_Small_Icon.svg';
 
 const SearchBar = () => {

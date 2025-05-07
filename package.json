@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://{username}.github.io/{repository-name}",
   "scripts": {
-    "dev": "NEXT_DISABLE_TURBOPACK=1  next dev ",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
