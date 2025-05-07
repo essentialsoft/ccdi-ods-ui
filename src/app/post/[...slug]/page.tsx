@@ -107,7 +107,7 @@ export default async function Post(props: any) {
       <Breadcrumb collection={collection} page={page} />
       <div className="flex flex-row gap-8 relative">
         {/* Side Navigation */}
-        <nav className="mt-10 w-64 flex-shrink-0 sticky top-10 max-h-[calc(100vh-45rem)] overflow-y-auto">
+        <nav className="mt-10 w-64 flex-shrink-0 sticky top-10 max-h-[calc(100vh-8rem)] overflow-y-auto">
           <div className="border-l-[2.25px] border-[#49B5B1] p-4">
             <ul className="space-y-3 pl-4">
               {headings.map((heading) => (

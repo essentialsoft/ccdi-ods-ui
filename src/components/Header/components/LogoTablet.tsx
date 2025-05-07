@@ -1,26 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
 import { headerData } from '../../../config/globalHeaderData';
 
-const LogoArea = styled.div`
-    display: flex;
-
-    .logoContainer {
-      margin-top: 32px;
-
-      img {
-        height: 50px;
-        max-width: 350px;
-      }
-    }
-`;
-
 const Logo = () => (
-  <LogoArea>
-    <a id="header-logo-home-link" className="logoContainer" href={headerData.globalHeaderLogoLink}>
-      <img src={headerData.globalHeaderLogoSmall.src} alt={headerData.globalHeaderLogoAltText} />
+  <div className="flex">
+    <a id="header-logo-home-link" className="mt-[32px]" href={headerData.globalHeaderLogoLink}>
+      <img className="h-[50px] max-w-[350px]" src={headerData.globalHeaderLogoSmall.src} alt={headerData.globalHeaderLogoAltText} />
     </a>
-  </LogoArea>
+  </div>
 );
 
 export default Logo;

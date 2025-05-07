@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
-import styled from 'styled-components';
 
 interface NavItem {
   name: string;
@@ -19,221 +18,6 @@ interface NavigationData {
     [key: string]: NavItem[];
   };
 }
-
-const Nav = styled.div`
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: #ffffff;
-    box-shadow: -0.1px 6px 9px -6px rgba(0, 0, 0, 0.5);
-    z-index: 1100;
-    position: relative;
-
-    .dropdownContainer {
-      margin: 0 auto;
-      position: relative;
-      width: 1400px;
-    }
-    .invisible {
-      visibility: hidden;
-    }
- `;
-
-const NavContainer = styled.div`
-    margin: 0 auto;
-    max-width: 1400px;
-    text-align: left;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-`;
-
-const UlContainer = styled.ul`
-  list-style: none;
-  margin: 0;
-  padding-top: 17px;
-  padding-left: 11px;
-`;
-
-const LiSection = styled.li`
-  display: inline-block;
-  position: relative;
-  line-height: 50px;
-  letter-spacing: 1px;
-  text-align: center;
-  transition:all 0.3s ease-in-out;
-
-  a {
-    color: #585C65;
-    text-decoration: none;
-  }
-
-  .navTitle {
-    display: block;
-    color: #585C65;
-    font-family: var(--font-poppins);
-    font-size: 17px;
-    font-weight: 700;
-    line-height: 40px;
-    letter-spacing: normal;
-    text-decoration: none;
-    margin: 0 45px 0 5px;
-    padding: 0 15px;
-    user-select:none;
-    border-top: 4px solid transparent;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-  }
-
-  .navTitle:hover {
-    cursor: pointer;
-  }
-
-  .navText {
-    border-bottom: 4px solid transparent;
-  }
-
-  .navText:hover {
-    cursor: pointer;
-    color: #3A75BD;
-    border-bottom: 4px solid #3A75BD;
-
-    ::after {
-      content: "";
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      border-bottom: 1px solid #298085;
-      border-left: 1px solid #298085;
-      margin: 0 0 4px 8px;
-      transform: rotate(-45deg);
-      -webkit-transform: rotate(-45deg);
-    }
-  }
-
-  .navText::after {
-    content: "";
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-bottom: 1px solid #585C65;
-    border-left: 1px solid #585C65;
-    margin: 0 0 4px 8px;
-    transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
-  }
-
-  .clicked {
-    color: #FFFFFF;
-    background: #1F4671;
-  }
-
-  .clicked::after {
-    border-top: 1px solid #FFFFFF;
-    border-right: 1px solid #FFFFFF;
-    border-bottom: 0;
-    border-left: 0;
-    margin: 0 0 0 8px
-  }
-
-  .clicked:hover {
-    border-bottom: 4px solid #1F4671;
-    color: #FFFFFF;
-
-    ::after {
-      content: "";
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      border-top: 1px solid #FFFFFF;
-      border-right: 1px solid #FFFFFF;
-      border-bottom: 0;
-      border-left: 0;
-      margin: 0 0 0 8px;
-      transform: rotate(-45deg);
-      -webkit-transform: rotate(-45deg);
-    }
-  }
-
-  .directLink::after {
-    display: none;
-  }
-
-  .directLink:hover {
-    ::after {
-      display: none;
-    }
-  }
-  .shouldBeUnderlined {
-    border-bottom: 4px solid #3A75BD;
-  }
-  .navTitleClicked {
-    display: block;
-    color: #FFFFFF;
-    font-family: var(--font-poppins);
-    font-size: 17px;
-    font-weight: 700;
-    line-height: 40px;
-    letter-spacing: normal;
-    text-decoration: none;
-    margin: 0 45px 0 5px;
-    padding: 0 15px;
-    user-select:none;
-    background: #1F4671;
-    border-top: 4px solid #5786FF;
-    border-left: 4px solid #5786FF;
-    border-right: 4px solid #5786FF;
-  }
-`;
-
-const Dropdown = styled.div`
-    top: 60.5px;
-    left: 0;
-    width: 100%;
-    background: #1F4671;
-    z-index: 1100;
-    position: absolute;
-`;
-
-const DropdownContainer = styled.div`
-    margin: 0 auto;
-    text-align: left;
-    position: relative;
-    max-width: 1400px;
-
-    .dropdownList {
-      background: #1F4671;
-      display: grid;
-      grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
-      padding: 32px 32px 0 32px;
-    }
-
-    .dropdownItem {
-      padding: 0 10px 52px 10px;
-      text-align: left;
-      font-family: var(--font-poppins);
-      font-weight: 600;
-      font-style: normal;
-      font-size: 20px;
-      line-height: 110%;
-      color: #FFFFFF;
-      text-decoration: none;
-  }
-
-  .dropdownItem:hover {
-    text-decoration: underline;
-  }
-
-  .dropdownItemText {
-    margin-top: 5px;
-    font-family: var(--font-open-sans);
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16.16px;
-    line-height: 22px;
-  }
-`;
 
 const useOutsideAlerter = (ref: React.RefObject<HTMLDivElement | null>) => {
   useEffect(() => {
@@ -285,7 +69,7 @@ const NavBar = () => {
   useOutsideAlerter(dropdownSelection);
 
   if (!navigationData) {
-    return <Nav><NavContainer>Loading...</NavContainer></Nav>;
+    return <div className="relative w-full bg-white shadow-md z-[1100]"><div className="mx-auto max-w-[1400px] text-left relative flex justify-between items-end">Loading...</div></div>;
   }
 
   const clickableObject = navigationData.navList.filter((item) => item.className === 'navMobileItem clickable');
@@ -320,56 +104,60 @@ const NavBar = () => {
   }
 
   return (
-    <Nav>
-      <NavContainer>
-        <UlContainer>
+    <div className="relative w-full bg-white shadow-md z-[1100]">
+      <div className="mx-auto max-w-[1400px] text-left relative flex justify-between items-end">
+        <ul className="list-none m-0 pt-[17px] pl-[11px]">
           {
             navigationData.navList.map((navMobileItem, idx) => {
               const navkey = `nav_${idx}`;
               return (
                 navMobileItem.className === 'navMobileItem'
                   ? (
-                    <LiSection key={navkey}>
-                      <div className="navTitle directLink">
+                    <li key={navkey} className="inline-block relative leading-[50px] tracking-[1px] text-center transition-all duration-300 ease-in-out">
+                      <div className="block text-[#585C65] font-poppins text-[17px] font-bold leading-[40px] tracking-normal no-underline mx-[45px_0_0_5px] px-[15px] select-none border-t-4 border-l-4 border-r-4 border-transparent">
                         <Link href={navMobileItem.link} passHref>
                           <div
                             id={navMobileItem.id}
                             onKeyDown={onKeyPressHandler}
                             role="button"
                             tabIndex={0}
-                            className={`navText directLink ${shouldBeUnderlined(navMobileItem) ? "shouldBeUnderlined" : ""}`}
+                            className={`cursor-pointer text-[#585C65] hover:text-[#3A75BD] hover:border-b-4 hover:border-b-[#3A75BD] 
+                              ${shouldBeUnderlined(navMobileItem) ? "border-b-4 border-b-[#3A75BD]" : ""}`}
                             onClick={handleMenuClick}
                           >
                             {navMobileItem.name}
                           </div>
                         </Link>
                       </div>
-                    </LiSection>
+                    </li>
                   )
                   : (
-                    <LiSection key={navkey}>
-                      <div className={clickedTitle === navMobileItem.name ? 'navTitleClicked' : 'navTitle'}>
+                    <li key={navkey} className="inline-block relative leading-[50px] tracking-[1px] text-center transition-all duration-300 ease-in-out">
+                      <div className={clickedTitle === navMobileItem.name ? 'block text-white font-poppins text-[17px] font-bold leading-[40px] tracking-normal no-underline mx-[45px_0_0_5px] px-[15px] select-none bg-[#1F4671] border-t-4 border-l-4 border-r-4 border-[#5786FF]' : 'block text-[#585C65] font-poppins text-[17px] font-bold leading-[40px] tracking-normal no-underline mx-[45px_0_0_5px] px-[15px] select-none border-t-4 border-l-4 border-r-4 border-transparent'}>
                         <div
                           id={navMobileItem.id}
                           onKeyDown={onKeyPressHandler}
                           role="button"
                           tabIndex={0}
-                          className={`${clickedTitle === navMobileItem.name ? 'navText clicked' : 'navText'} ${shouldBeUnderlined(navMobileItem) ? "shouldBeUnderlined" : ""}`}
+                          className={`cursor-pointer ${clickedTitle === navMobileItem.name ? 
+                            'text-white bg-[#1F4671] border-b-4 border-b-[#1F4671] after:content-[""] after:inline-block after:w-[6px] after:h-[6px] after:border-t after:border-r after:border-white after:border-b-0 after:border-l-0 after:ml-2 after:mb-0 after:-rotate-45' : 
+                            'text-[#585C65] hover:text-[#3A75BD] hover:border-b-4 hover:border-b-[#3A75BD] after:content-[""] after:inline-block after:w-[6px] after:h-[6px] after:border-b after:border-l after:border-[#585C65] after:ml-2 after:mb-1 after:-rotate-45 hover:after:border-[#298085]'
+                          } ${shouldBeUnderlined(navMobileItem) ? "border-b-4 border-b-[#3A75BD]" : ""}`}
                           onClick={handleMenuClick}
                         >
                           {navMobileItem.name}
                         </div>
                       </div>
-                    </LiSection>
+                    </li>
                   )
               );
             })
           }
-        </UlContainer>
-      </NavContainer>
-      <Dropdown ref={dropdownSelection} className={clickedTitle === ''  ? "invisible" : ""}>
-        <DropdownContainer>
-          <div className="dropdownList">
+        </ul>
+      </div>
+      <div ref={dropdownSelection} className={`absolute top-[60.5px] left-0 w-full bg-[#1F4671] z-[1100] ${clickedTitle === '' ? "invisible" : ""}`}>
+        <div className="mx-auto text-left relative max-w-[1400px]">
+          <div className="bg-[#1F4671] grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] p-[32px_32px_0_32px]">
             {
               clickedTitle !== "" && navigationData.navbarSublists[clickedTitle]?.map((dropItem, idx) => {
                 const dropkey = `drop_${idx}`;
@@ -379,21 +167,25 @@ const NavBar = () => {
                       id={dropItem.id}
                       href={dropItem.link}
                       passHref
-                      className="dropdownItem"
+                      className="cursor-pointer p-[0_10px_52px_10px] text-left font-poppins font-semibold text-[20px] leading-[110%] text-white no-underline hover:underline"
                       key={dropkey}
                       onClick={() => setClickedTitle("")}
                     >
                       {dropItem.name}
-                      {dropItem.text && dropItem.text.trim() !== '' && <div className="dropdownItemText">{dropItem.text}</div>}
+                      {dropItem.text && dropItem.text.trim() !== '' && (
+                        <div className="mt-[5px] font-open-sans font-normal text-[16.16px] leading-[22px]">
+                          {dropItem.text}
+                        </div>
+                      )}
                     </Link>
                   )
                 );
               })
             }
           </div>
-        </DropdownContainer>
-      </Dropdown>
-    </Nav>
+        </div>
+      </div>
+    </div>
   );
 };
 
