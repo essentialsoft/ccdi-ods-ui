@@ -1,49 +1,14 @@
-import styled from 'styled-components';
 import { headerData } from '../../config/globalHeaderData';
 
-const BannerArea = styled.aside`
-  flex-direction: row;
-  width: 100%;
-  height: 46px;
-  background: #F0F0F0;
-`;
-const BannerContainer = styled.div`
-  display: flex;
-  align-items: center;
-  max-width: 1400px;
-  height: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 2rem;
-
-  img {
-    margin-right: 14px;
-  }
-
-  .text{
-    font-family: var(--font-open-sans);
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
-    width: fit-content;
-    height: 16px;
-  }
-
-  @media (max-width: 1023px) {
-    padding-left: 1rem;
-  }
-`;
-
 const USABanner = () => (
-  <BannerArea aria-label="USA Banner">
-    <BannerContainer>
-      <img src={headerData.usaFlagSmall.src} alt={headerData.usaFlagSmallAltText} />
-      <div className="text">
+  <aside className="flex-row w-full h-[46px] bg-[#F0F0F0]">
+    <div className="flex items-center max-w-[1400px] h-full mx-auto pl-8 md:pl-4">
+      <img className="mr-[14px]" src={headerData.usaFlagSmall.src} alt={headerData.usaFlagSmallAltText} />
+      <div className="font-['Open_Sans'] font-normal text-[12px] leading-[16px] w-fit h-[16px]">
         An official website of the United States government
       </div>
-    </BannerContainer>
-  </BannerArea>
+    </div>
+  </aside>
 );
 
 export default USABanner;

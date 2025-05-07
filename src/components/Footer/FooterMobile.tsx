@@ -1,306 +1,6 @@
 'use client';
 import React, { useState, useRef, FormEvent, ChangeEvent } from 'react';
-import styled from 'styled-components';
 import FooterData from '../../config/globalFooterData';
-
-const FooterStyled = styled.footer`
-  background-color: #1B496E;
-  bottom: 0;
-  width: 100%;
-  z-index: 10;
-  position: relative;
-`;
-
-const FooterContainer = styled.div`
-  max-width: 1420px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-`;
-
-const FooterEmailSignupContainer = styled.form`
-  padding: 1rem 1rem 2rem 1rem;
-  .signUpTitle {
-    font-family: var(--font-poppins);
-    font-weight: 700;
-    font-size: 22.88px;
-    line-height: 34px;
-    color: #FFFFFF;
-    margin-bottom: 1rem;
-  }
-
-  .enterTitle {
-    font-family: var(--font-open-sans);
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 22px;
-    color: #FFFFFF;
-    margin-bottom: 10px;
-  }
-
-  .signUpInputBox {
-    width: 100%;
-    height: 47px;
-    font-size: 25px;
-    padding-left: 8px;
-     margin-top: 8px;
-    background:#fff; 
-  }
-
-  .signUpInputBox:focus {
-    outline: 0.25rem solid #2491ff;
-  }
-
-  .signUpButton {
-    width:100%;
-    background: #FACE00;
-    border-radius: 8px;
-    border: 0;
-    padding: 9px 16px;
-    font-family: var(--font-open-sans);
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 22px;
-    color: #14315C;
-    margin-top: 18px;
-  }
-
-  .signUpButton:hover {
-    cursor: pointer;
-  }
-
-  .errorEmail {
-    background: #e41154;
-    padding: 10px 5px 5px 5px;
-
-    .signUpInputBox {
-      outline: 0.25rem solid #2491ff;
-      outline-offset: 5px;
-    }
-  }
-
-  .ErrorBorder {
-    position: relative;
-    border-left: 0.25rem solid #e41154;
-    padding-left: 1rem;
-    left: -20px;
-  }
-`;
-
-const FooterLinksContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  .footItem {
-    width: 253px; 
-  }
-
-  .footItemTitle {
-    font-family: var(--font-open-sans);
-    color: #FFFFFF;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 22px;
-    margin-bottom: 10px;
-  }
-
-  .footItemSubtitle {
-    margin-bottom: 10px;
-    max-width: 180px;
-  }
-
-  .footItemLink {
-    font-family: var(--font-open-sans);
-    color: #FFFFFF;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 22px;
-    text-decoration: none;
-  }
-
-  .footItemLink:hover {
-    text-decoration: underline;
-  }
-
-  .dropbtn {
-    display:flex;
-    flex-direction: row;
-    vertical-align: middle;
-    text-align: left;
-    background-color: #1B496E;
-    width: 100%;
-    font-family: var(--font-open-sans);
-    font-style: normal;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 20px;
-    color: #FFFFFF;
-    padding: 1rem 0.5rem 1rem 0.5rem;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-  }
-
-  .dropdown {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px solid black;
-  }
-
-  .dropdown-content {
-    display: none;
-    z-index: 1;
-  }
-
-  .dropdown-content a {
-    color: white;
-    padding: 0 0 1rem 1rem;
-    text-decoration: none;
-    display: block;
-    width: fit-content;
-  }
-
-
-  .show {
-    display:block;
-  }
-
-  .arrow {
-    margin-right: 0.25rem;
-  }
-  .rotate{
-    transform: rotate(90deg); 
-  }
-`;
-
-const BottomFooter = styled.div`
- background: #14315C;
-
-  span {
-    display: block;
-  }
-
-  .bottom-footer-container {
-    display: flex;
-    flex-flow: wrap;
-    flex-direction: column;
-    justify-content: space-between;
-    max-width: 1420px;
-    margin-left: auto;
-    margin-right: auto;
-    height: fit-content;
-    padding-top: 1.25rem;
-    padding-bottom: 1.25rem;
-    padding-left: 1rem;
-  }
-
-  .break {
-    order: 2;
-    width: 100%;
-    flex-basis: 100%;
-    height: 2rem;
-    margin: 0;
-    border: 0;
-    display: none;
-  }
-
-  .logoText {
-    text-decoration: none;
-    white-space: nowrap;
-  }
-
-  .logoUpperText {
-    font-family: var(--font-poppins);
-    font-weight: 700;
-    font-size: 24.96px;
-    line-height: 37px;
-    color: #FFFFFF;
-  }
-
-  .logoLowerText {
-    font-family: var(--font-poppins);
-    font-weight: 400;
-    font-size: 18.72px;
-    color: #FFFFFF;
-  }
-
-  #bottom-footer-contact-us {
-    font-family: var(--font-poppins);
-    font-style: normal;
-    font-weight: 700;
-    font-size: 22.88px;
-    line-height: 34px;
-    text-align: left;
-    color: #FFFFFF;
-    order: 1;
-    margin-top: 1.5rem;
-  }
-
-  #bottom-footer-contact-links {
-    font-family: var(--font-open-sans);
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 1.6;
-    color: #FFFFFF;
-    margin-top: 0.25rem;
-  }
-
-  #bottom-footer-contact-links a {
-    text-decoration: none;
-    color: #FFFFFF;
-    display: block;
-    margin-left: 0px;
-    margin-right: 10px;
-    line-break: anywhere;
-  }
-
-
-  #bottom-footer-follow-us {
-    font-family: var(--font-poppins);
-    font-style: normal;
-    font-weight: 700;
-    font-size: 22.88px;
-    line-height: 34px;
-    color: #FFFFFF;
-    order: 3;
-    margin-top: 1rem;
-  }
-
-  #bottom-footer-follow-us-links {
-    margin-top: 1rem;
-     display: flex;
-  }
-
-  .bottom-footer-social-media-imgs {
-    margin-left: 10px;
-  }
-
-  #bottom-footer-gov-links {
-    order: 4;
-  }
-
-  #bottom-footer-gov-links a {
-    text-decoration: none;
-    display: block;
-    font-family: var(--font-open-sans);
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 1.6;
-    text-align: left;
-    color: #FFFFFF;
-  }
-
-  #bottom-footer-follow-us-links {
-        margin-top: 0.75rem;
-  }
-
-  #bottom-footer-gov-links {
-      margin-right: 0px;
-      margin-top: 0.75rem;
-  }
-`;
 
 const FooterMobile = () => {
   const [errorClass, setErrorClass] = useState("");
@@ -341,110 +41,122 @@ const FooterMobile = () => {
 
   return (
     <>
-      <FooterStyled role="contentinfo">
-        <FooterContainer>
-          <FooterLinksContainer>
-            {
-              FooterData.link_sections.map((linkItem, linkidx) => {
-                const linkkey = `link_${linkidx}`;
-                return (
-                  <div className="dropdown" key={linkkey}>
-                    <button type="button" onClick={() => handleDropdown(linkkey)} className="dropbtn">
-                      <svg id={`${linkkey}Arrow`} className="arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                        <path fill="currentColor" d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-                      </svg>
-                      {linkItem.title}
-                    </button>
-                    <div id={`${linkkey}Dropdown`} className="dropdown-content">
-                      {
-                        linkItem.items.map((item, itemidx) => {
-                          const itemkey = `item_${itemidx}`;
-                          return (
-                            item.link.includes('http')
-                              ? <a className="footItemLink" key={itemkey} href={item.link} target="_blank" rel="noopener noreferrer">{item.text}</a>
-                              : <a className="footItemLink" key={itemkey} href={item.link}>{item.text}</a>
-                          );
-                        })
-                      }
-                    </div>
+      <footer role="contentinfo" className="bg-[#1B496E] bottom-0 w-full z-10 relative">
+        <div className="max-w-[1420px] mx-auto flex justify-between flex-col">
+          <div className="flex flex-col">
+            {FooterData.link_sections.map((linkItem, linkidx) => {
+              const linkkey = `link_${linkidx}`;
+              return (
+                <div className="relative inline-block border-b border-black" key={linkkey}>
+                  <button type="button" onClick={() => handleDropdown(linkkey)} 
+                    className="flex flex-row items-center w-full bg-[#1B496E] font-['Open_Sans'] font-bold text-base text-white p-4 cursor-pointer">
+                    <svg id={`${linkkey}Arrow`} className="mr-1 transition-transform" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                      <path fill="currentColor" d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+                    </svg>
+                    {linkItem.title}
+                  </button>
+                  <div id={`${linkkey}Dropdown`} className="hidden z-[1]">
+                    {linkItem.items.map((item, itemidx) => {
+                      const itemkey = `item_${itemidx}`;
+                      return (
+                        <a className="text-white pb-4 pl-4 block w-fit font-['Open_Sans'] hover:underline" 
+                          key={itemkey} 
+                          href={item.link}
+                          {...(item.link.includes('http') ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+                          {item.text}
+                        </a>
+                      );
+                    })}
                   </div>
-                );
-              })
-            }
-          </FooterLinksContainer>
-          <FooterEmailSignupContainer onSubmit={handleSubmit} ref={emailForm} action="https://public.govdelivery.com/accounts/USNIHNCI/subscribers/qualify" method="post" target="_blank" id="signup" noValidate>
+                </div>
+              );
+            })}
+          </div>
+
+          <form onSubmit={handleSubmit} ref={emailForm} 
+            action="https://public.govdelivery.com/accounts/USNIHNCI/subscribers/qualify" 
+            method="post" 
+            target="_blank" 
+            id="signup" 
+            className="px-4 pb-8"
+            noValidate>
             <input type="hidden" name="topic_id" id="topic_id" value="USNIHNCI_223" />
-            <div className="signUpTitle">
+            <div className="font-['Poppins'] font-bold text-[22.88px] leading-[34px] text-white mb-4">
               Sign up for email updates
             </div>
-            <div className={errorClass !== "" ? 'ErrorBorder' : undefined}>
-              <div className="enterTitle">
+            <div className={errorClass !== "" ? 'border-l-4 border-[#e41154] pl-4 -left-5 relative' : undefined}>
+              <div className="font-['Open_Sans'] text-base leading-[22px] text-white mb-2.5">
                 <label htmlFor="email">
                   Enter your email address
-                  <div className={errorClass}>
-                    {errorClass !== "" ? <div className="enterTitle">Enter a valid email address</div> : null}
-                    <input id="email" type="email" name="email" className="signUpInputBox" value={emailContent} onChange={(e) => handleChange(e)} />
+                  <div className={errorClass ? "bg-[#e41154] py-2.5 px-1.5" : ""}>
+                    {errorClass !== "" && <div className="text-white">Enter a valid email address</div>}
+                    <input id="email" 
+                      type="email" 
+                      name="email" 
+                      className="w-full h-[47px] text-[25px] pl-2 mt-2 bg-white focus:outline-[#2491ff] focus:outline-[0.25rem]" 
+                      value={emailContent} 
+                      onChange={(e) => handleChange(e)} />
                   </div>
                 </label>
               </div>
-
             </div>
-            <button type="submit" className="signUpButton">
+            <button type="submit" 
+              className="w-full bg-[#FACE00] rounded-lg border-0 py-2.5 px-4 font-['Open_Sans'] font-bold text-base text-[#14315C] mt-[18px] hover:cursor-pointer">
               Sign up
             </button>
-          </FooterEmailSignupContainer>
-        </FooterContainer>
+          </form>
+        </div>
 
-        <BottomFooter>
-          <div className="bottom-footer-container">
+        <div className="bg-[#14315C]">
+          <div className="flex flex-wrap flex-col justify-between max-w-[1420px] mx-auto h-fit py-5 pl-4">
             <div id="bottom-footer-header">
-              <a className="logoText" href="https://www.cancer.gov" target="_blank" rel="noopener noreferrer">
-                <div className="logoUpperText">National Cancer Institute</div>
-                <div className="logoLowerText">at the National Institutes of Health</div>
+              <a className="no-underline whitespace-nowrap" href="https://www.cancer.gov" target="_blank" rel="noopener noreferrer">
+                <div className="font-['Poppins'] font-bold text-[24.96px] leading-[37px] text-white">
+                  National Cancer Institute
+                </div>
+                <div className="font-['Poppins'] font-normal text-[18.72px] text-white">
+                  at the National Institutes of Health
+                </div>
               </a>
             </div>
-            <div id="bottom-footer-contact-us">
+            <div id="bottom-footer-contact-us" className="font-['Poppins'] font-bold text-[22.88px] leading-[34px] text-left text-white order-1 mt-6">
               Contact Us
-              <div id="bottom-footer-contact-links">
-                {
-                  FooterData.contact_links.map((contactItem, contactidx) => {
-                    const contactkey = `contact_${contactidx}`;
-                    return (
-                      contactItem.link.includes('http')
-                        ? <a key={contactkey} href={contactItem.link} target="_blank" rel="noopener noreferrer">{contactItem.text}</a>
-                        : <a key={contactkey} href={contactItem.link}>{contactItem.text}</a>
-                    );
-                  })
-                }
-              </div>
-            </div>
-            <div className="break" />
-            <div id="bottom-footer-follow-us">
-              Follow Us
-              <div id="bottom-footer-follow-us-links">
-                {
-                  FooterData.followUs_links.map((followItem, followidx) => {
-                    const followkey = `follow_${followidx}`;
-                    return (
-                      <a key={followkey} className={followidx !== 0 ? "bottom-footer-social-media-imgs" : ""} href={followItem.link} target="_blank" rel="noopener noreferrer"><img src={followItem.img.src} alt={followItem.description} /></a>
-                    );
-                  })
-                }
-              </div>
-            </div>
-            <div id="bottom-footer-gov-links">
-              {
-                FooterData.global_footer_links.map((linkItem, idx) => {
-                  const linkitemkey = `linkitem_${idx}`;
+              <div id="bottom-footer-contact-links" className="font-['Open_Sans'] font-normal text-base leading-[1.6] text-white mt-1">
+                {FooterData.contact_links.map((contactItem, contactidx) => {
+                  const contactkey = `contact_${contactidx}`;
                   return (
-                    <a key={linkitemkey} href={linkItem.link} target="_blank" rel="noopener noreferrer">{linkItem.text}</a>
+                    contactItem.link.includes('http')
+                      ? <a key={contactkey} href={contactItem.link} target="_blank" rel="noopener noreferrer" className="no-underline text-white block ml-0 mr-2.5 break-words">{contactItem.text}</a>
+                      : <a key={contactkey} href={contactItem.link} className="no-underline text-white block ml-0 mr-2.5 break-words">{contactItem.text}</a>
                   );
-                })
-              }
+                })}
+              </div>
+            </div>
+            <div className="order-2 w-full flex-basis-full h-8 m-0 border-0 hidden" />
+            <div id="bottom-footer-follow-us" className="font-['Poppins'] font-bold text-[22.88px] leading-[34px] text-white order-3 mt-4">
+              Follow Us
+              <div id="bottom-footer-follow-us-links" className="mt-3 flex">
+                {FooterData.followUs_links.map((followItem, followidx) => {
+                  const followkey = `follow_${followidx}`;
+                  return (
+                    <a key={followkey} className={followidx !== 0 ? "ml-2.5" : ""} href={followItem.link} target="_blank" rel="noopener noreferrer">
+                      <img src={followItem.img.src} alt={followItem.description} />
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+            <div id="bottom-footer-gov-links" className="order-4 mt-3">
+              {FooterData.global_footer_links.map((linkItem, idx) => {
+                const linkitemkey = `linkitem_${idx}`;
+                return (
+                  <a key={linkitemkey} href={linkItem.link} target="_blank" rel="noopener noreferrer" className="no-underline font-['Open_Sans'] font-normal text-sm leading-[1.6] text-left text-white block">{linkItem.text}</a>
+                );
+              })}
             </div>
           </div>
-        </BottomFooter>
-      </FooterStyled>
+        </div>
+      </footer>
     </>
   );
 };

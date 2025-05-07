@@ -1,79 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import { useRouter } from 'next/navigation'; // Updated to new navigation import
-import clearIcon from '../../../../assets/header/Clear_Icon.svg';
-
-const SearchBarContainer = styled.div`
-    display: flex;
-
-    .searchBar {
-      margin-left: auto;
-      width: 224px;
-      height: 32px;
-      border: 1px solid #71767A;
-    }
-
-    .searchButton {
-      height: 32px;
-      font-family: var(--font-open-sans);
-      font-weight: 700;
-      font-size: 1rem;
-      line-height: 33px;
-      text-align: center;
-      color: #FFFFFF;
-      background: #007BBD;
-      padding: 0 13px;
-      border-radius: 0px 5px 5px 0px;
-    }
-
-    .searchButton:hover {
-      cursor: pointer;
-      background: #004971;
-    }
-
-    input:focus-visible{
-      outline:none;
-      border: 3px solid #5786FF;
-    }
-`;
-
-const SearchInput = styled.input`
-  margin: -1px 0 0 -1px;
-  padding: 0 7px;
-  border: none;
-  font-family: var(--font-open-sans);
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 42px;
-  color: #1b1b1b;
-  width: 224px;
-  height: 32px;
-  background: transparent;
-
-  input[type="search"]::-webkit-search-cancel-button {
-    position: relative;
-    -webkit-appearance: none;
-    height: 20px;
-    width: 20px;
-    background: url(${clearIcon}) right center no-repeat;
-    background-image: url(${clearIcon}) red;
-    background-size: 20px;
-    cursor: pointer;
-  }
-
-  input[type="search"]:focus::-webkit-search-cancel-button {
-    position: relative;
-    -webkit-appearance: none;
-    height: 20px;
-    width: 20px;
-    background: url(${clearIcon}) right center no-repeat;
-    background-image: url(${clearIcon}) red;
-    background-size: 20px;
-    cursor: pointer;
-  }
-`;
+import { useRouter } from 'next/navigation';
 
 const SearchBar = () => {
   const router = useRouter();
@@ -99,28 +27,29 @@ const SearchBar = () => {
   };
 
   return (
-    <SearchBarContainer>
-      <div className="searchBar">
+    <div className="flex">
+      <div className="ml-auto w-[224px] h-[32px] border border-[#71767A]">
         <label>
-          <SearchInput
+          <input
             id="header-search-bar"
             type="search"
             value={localText}
             onChange={handleTextInputChange}
             onKeyDown={handleKeyPress}
+            className="m-[-1px_0_0_-1px] p-0 px-[7px] border-none font-['Open_Sans'] font-normal text-base leading-[42px] text-[#1b1b1b] w-[224px] h-[32px] bg-transparent focus:outline-none focus:border-[3px] focus:border-[#5786FF]"
           />
         </label>
       </div>
       <div
         role="button"
         tabIndex={0}
-        className="searchButton"
+        className="h-[32px] font-['Open_Sans'] font-bold text-base leading-[33px] text-white bg-[#007BBD] px-[13px] rounded-[0_5px_5px_0] hover:cursor-pointer hover:bg-[#004971]"
         onKeyDown={handleKeyPress}
         onClick={handleSearch}
       >
         Search
       </div>
-    </SearchBarContainer>
+    </div>
   );
 };
 

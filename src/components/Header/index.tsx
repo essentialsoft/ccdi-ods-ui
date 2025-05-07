@@ -1,63 +1,24 @@
 'use client';
 
 import React from 'react';
-import styled from 'styled-components';
 import HeaderDesktop from './HeaderDesktop';
 import HeaderTablet from './HeaderTablet';
 import HeaderMobile from './HeaderMobile';
 import USABanner from './USABanner';
 
-const HeaderContainer = styled.div`
- @media (min-width: 1024px) {
-    .desktop {
-      display: block;
-    }
-    .tablet {
-      display: none;
-    }
-    .mobile {
-      display: none;
-    }
-  }
-
-  @media (min-width:768px) and (max-width: 1024px) {
-    .desktop {
-      display: none;
-    }
-    .tablet {
-      display: block;
-    }
-    .mobile {
-      display: none;
-    }
-  }
-
-  @media  (max-width: 768px) {
-    .desktop {
-      display: none;
-    }
-    .tablet {
-      display: none;
-    }
-    .mobile {
-      display: block;
-    }
-  }
-`;
-
 const Header = () => (
-  <HeaderContainer>
+  <div>
     <USABanner />
-    <div className="desktop">
+    <div className="hidden lg:block">
       <HeaderDesktop />
     </div>
-    <div className="tablet">
+    <div className="hidden md:block lg:hidden">
       <HeaderTablet />
     </div>
-    <div className="mobile">
+    <div className="block md:hidden">
       <HeaderMobile />
     </div>
-  </HeaderContainer>
+  </div>
 );
 
 export default Header;

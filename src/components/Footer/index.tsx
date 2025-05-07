@@ -1,51 +1,11 @@
 'use client';
-
 import React from 'react';
-import styled from 'styled-components';
 import FooterDesktop from './FooterDesktop';
 import FooterTablet from './FooterTablet';
 import FooterMobile from './FooterMobile';
 
-const FooterContainer = styled.div`
- @media (min-width: 1024px) {
-    .desktop {
-      display: block;
-    }
-    .tablet {
-      display: none;
-    }
-    .mobile {
-      display: none;
-    }
-  }
-
-  @media (min-width:768px) and (max-width: 1024px) {
-    .desktop {
-      display: none;
-    }
-    .tablet {
-      display: block;
-    }
-    .mobile {
-      display: none;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .desktop {
-      display: none;
-    }
-    .tablet {
-      display: none;
-    }
-    .mobile {
-      display: block;
-    }
-  }
-`;
-
 const Footer = () => (
-  <FooterContainer>
+  <div className="lg:block lg:[&_.desktop]:block lg:[&_.tablet]:hidden lg:[&_.mobile]:hidden md:block md:[&_.desktop]:hidden md:[&_.tablet]:block md:[&_.mobile]:hidden [&_.desktop]:hidden [&_.tablet]:hidden [&_.mobile]:block">
     <div className="desktop">
       <FooterDesktop />
     </div>
@@ -55,7 +15,7 @@ const Footer = () => (
     <div className="mobile">
       <FooterMobile />
     </div>
-  </FooterContainer>
-  );
+  </div>
+);
 
 export default Footer;

@@ -1,86 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import { useRouter } from 'next/router'; // Updated import
+import { useRouter } from 'next/router';
 import clearIcon from '../../../assets/header/Clear_Icon.svg';
 import searchIcon from '../../../assets/header/Search_Small_Icon.svg';
 
-const SearchBarContainer = styled.div`
-    display: flex;
-
-    .searchBar {
-      margin-left: auto;
-      width: 303px;
-      height: 43px;
-      border: 1px solid #71767A;
-    }
-
-    .searchButton {
-      height: 43px;
-      font-family: var(--font-open-sans);
-      font-weight: 700;
-      font-size: 1rem;
-      line-height: 33px;
-      text-align: center;
-      color: #FFFFFF;
-      background: #007BBD;
-      padding: 10px 14px;
-      border-radius: 0px 5px 5px 0px;
-    }
-
-    .searchButton:hover {
-      cursor: pointer;
-      background: #004971;
-    }
-`;
-
-const SearchInput = styled.input`
-  margin: -1px 0 0 -1px;
-  padding: 0 7px;
-  border: none;
-  font-family: Open Sans;
-  font-weight: 400;
-  font-size: 1.27rem;
-  line-height: 47px;
-  color: #1b1b1b;
-  width: 303px;
-  height: 43px;
-  background: transparent;
-
-  ::placeholder {
-    color: #004A8B;
-  }
-
-  :focus {
-    outline: 0.25rem solid #2491ff;
-  }
-
-  input[type="search"]::-webkit-search-cancel-button {
-    position: relative;
-    -webkit-appearance: none;
-    height: 20px;
-    width: 20px;
-    background: url(${clearIcon}) right center no-repeat;
-    background-image: url(${clearIcon}) red;
-    background-size: 20px;
-    cursor: pointer;
-  }
-
-  input[type="search"]:focus::-webkit-search-cancel-button {
-    position: relative;
-    -webkit-appearance: none;
-    height: 20px;
-    width: 20px;
-    background: url(${clearIcon}) right center no-repeat;
-    background-image: url(${clearIcon}) red;
-    background-size: 20px;
-    cursor: pointer;
-  }
-`;
-
 const SearchBar = () => {
-  const router = useRouter(); // Updated hook
+  const router = useRouter();
   const [localText, setLocalText] = useState("");
 
   const handleTextInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,40 +16,41 @@ const SearchBar = () => {
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      router.push(`/sitesearch/${localText.trim()}`); // Updated navigation logic
+      router.push(`/sitesearch/${localText.trim()}`);
       setLocalText("");
     }
   };
 
   const handleSearch = () => {
-    router.push(`/sitesearch/${localText.trim()}`); // Updated navigation logic
+    router.push(`/sitesearch/${localText.trim()}`);
     setLocalText("");
   };
 
   return (
-    <SearchBarContainer>
-      <div className="searchBar">
+    <div className="flex">
+      <div className="ml-auto w-[303px] h-[43px] border border-[#71767A]">
         <label>
-          <SearchInput
+          <input
             id="header-search-bar"
             type="search"
             value={localText}
             placeholder=""
             onChange={handleTextInputChange}
             onKeyDown={handleKeyPress}
+            className="relative -m-[1px] px-[7px] border-none font-['Open_Sans'] font-normal text-[1.27rem] leading-[47px] text-[#1b1b1b] w-[303px] h-[43px] bg-transparent placeholder-[#004A8B] focus:outline focus:outline-[0.25rem] focus:outline-[#2491ff]"
           />
         </label>
       </div>
       <div
         role="button"
         tabIndex={0}
-        className="searchButton"
+        className="h-[43px] font-[var(--font-open-sans)] font-bold text-base leading-[33px] text-center text-white bg-[#007BBD] px-[14px] py-[10px] rounded-r-[5px] hover:cursor-pointer hover:bg-[#004971]"
         onKeyDown={handleKeyPress}
         onClick={handleSearch}
       >
         <img src={searchIcon.src} alt="searchIcon" />
       </div>
-    </SearchBarContainer>
+    </div>
   );
 };
 

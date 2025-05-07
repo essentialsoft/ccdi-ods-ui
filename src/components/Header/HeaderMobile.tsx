@@ -1,13 +1,28 @@
 'use client';
 
-import React, { useState } from 'react';
-import Link from 'next/link'; // Updated import
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import styled from 'styled-components';
 import Logo from "./components/LogoMobile";
 import menuClearIcon from '../../../assets/header/Menu_Cancel_Icon.svg';
 import rightArrowIcon from '../../../assets/header/Right_Arrow.svg';
 import leftArrowIcon from '../../../assets/header/Left_Arrow.svg';
-import { navMobileList, navbarSublists } from '../../config/globalHeaderData';
+
+interface NavItem {
+  name: string;
+  link: string;
+  external?: boolean;
+  id: string;
+  className: string;
+  text?: string;
+}
+
+interface NavigationData {
+  navList: NavItem[];
+  navbarSublists: {
+    [key: string]: NavItem[];
+  };
+}
 
 const HeaderBanner = styled.div`
   width: 100%;
@@ -151,11 +166,34 @@ const MenuArea = styled.div`
 
 const Header = () => {
   const [navMobileDisplay, setNavMobileDisplay] = useState('none');
-  const [navbarMobileList, setNavbarMobileList] = useState(navMobileList);
+  const [navigationData, setNavigationData] = useState<NavigationData | null>(null);
+  const [navbarMobileList, setNavbarMobileList] = useState<NavItem[]>([]);
+
+  useEffect(() => {
+    const fetchNavigationData = async () => {
+      try {
+        const response = await fetch('https://api.github.com/repos/CBIIT/ccdi-ods-content/contents/config/navigation.json');
+        const data = await response.json();
+        const content = JSON.parse(atob(data.content));
+        setNavigationData(content);
+        setNavbarMobileList(content.navList);
+      } catch (error) {
+        console.error('Error fetching navigation data:', error);
+      }
+    };
+
+    fetchNavigationData();
+  }, []);
+
+  if (!navigationData) {
+    return <HeaderBanner role="banner"><HeaderContainer>Loading...</HeaderContainer></HeaderBanner>;
+  }
 
   const clickNavItem = (e: React.MouseEvent<HTMLDivElement>) => {
     const clickTitle = (e.target as HTMLElement).innerText;
-    setNavbarMobileList(navbarSublists[clickTitle as keyof typeof navbarSublists]);
+    if (clickTitle in navigationData.navbarSublists) {
+      setNavbarMobileList(navigationData.navbarSublists[clickTitle]);
+    }
   };
 
   return (
@@ -200,7 +238,7 @@ const Header = () => {
               <img className="closeIconImg" src={menuClearIcon.src} alt="menuClearButton" />
 
             </div>
-            {navbarMobileList !== navMobileList && (
+            {navbarMobileList !== navigationData.navList && (
               <div
                 role="button"
                 id="navbar-back-to-main-menu-button"
@@ -208,10 +246,10 @@ const Header = () => {
                 className="backButton"
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
-                    setNavbarMobileList(navMobileList);
+                    setNavbarMobileList(navigationData.navList);
                   }
                 }}
-                onClick={() => setNavbarMobileList(navMobileList)}
+                onClick={() => setNavbarMobileList(navigationData.navList)}
               >
                 Main Menu
               </div>
