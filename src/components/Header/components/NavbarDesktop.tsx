@@ -103,6 +103,15 @@ const NavBar = () => {
     return linkNames.includes(correctPath);
   }
 
+  const renderSubmenuRows = (items: NavItem[]) => {
+    const rows = [];
+    for (let i = 0; i < items.length; i += 4) {
+      const rowItems = items.slice(i, Math.min(i + 4, items.length));
+      rows.push(rowItems);
+    }
+    return rows;
+  };
+
   return (
     <div className="relative w-full bg-white shadow-md z-[1100]">
       <div className="mx-auto max-w-[1400px] text-left relative flex justify-between items-end">
@@ -157,18 +166,17 @@ const NavBar = () => {
       </div>
       <div ref={dropdownSelection} className={`absolute top-[60.5px] left-0 w-full bg-[#1F4671] z-[1100] ${clickedTitle === '' ? "invisible" : ""}`}>
         <div className="mx-auto text-left relative max-w-[1400px]">
-          <div className="bg-[#1F4671] grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] p-[32px_32px_0_32px]">
-            {
-              clickedTitle !== "" && navigationData.navbarSublists[clickedTitle]?.map((dropItem, idx) => {
-                const dropkey = `drop_${idx}`;
-                return (
+          <div className="bg-[#1F4671] p-[32px_32px_0_32px]">
+            {clickedTitle !== "" && renderSubmenuRows(navigationData.navbarSublists[clickedTitle]).map((row, rowIdx) => (
+              <div key={`row_${rowIdx}`} className="grid grid-cols-4 gap-6 mb-8">
+                {row.map((dropItem, idx) => (
                   dropItem.link && (
                     <Link
                       id={dropItem.id}
                       href={dropItem.link}
                       passHref
-                      className="cursor-pointer p-[0_10px_52px_10px] text-left font-poppins font-semibold text-[20px] leading-[110%] text-white no-underline hover:underline"
-                      key={dropkey}
+                      className="cursor-pointer text-left font-poppins font-semibold text-[20px] leading-[110%] text-white no-underline hover:underline"
+                      key={`drop_${rowIdx}_${idx}`}
                       onClick={() => setClickedTitle("")}
                     >
                       {dropItem.name}
@@ -179,9 +187,9 @@ const NavBar = () => {
                       )}
                     </Link>
                   )
-                );
-              })
-            }
+                ))}
+              </div>
+            ))}
           </div>
         </div>
       </div>

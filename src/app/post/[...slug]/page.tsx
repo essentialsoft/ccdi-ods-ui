@@ -382,21 +382,6 @@ export default async function Post({
     <div className="flex flex-col items-stretch px-20 pb-14 pt-3 max-md:px-5 max-w-[1444px] mx-auto min-h-screen">
       {/* Pass the cleaned title to Breadcrumb */}
       <Breadcrumb collection={collection} page={cleanTitle} />
-      {/* Add metadata display if needed */}
-      {metadata.author || metadata.date ? (
-        <div className="text-gray-600 mb-6">
-          {metadata.author && <span className="mr-4">By {metadata.author}</span>}
-          {metadata.date && (
-            <time dateTime={metadata.date}>
-              {new Date(metadata.date).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              })}
-            </time>
-          )}
-        </div>
-      ) : null}
       {/* Rest of your component */}
       <div className="flex flex-row gap-8 relative">
         {/* Side Navigation */}
