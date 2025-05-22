@@ -137,8 +137,15 @@ const MenuArea = styled.div`
         }
     }
 
+    .subMenuRow {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
     .navMobileItem {
-        width: 353px;
+        width: 100%;
         padding: 8px 24px 8px 16px;
         font-family: var(--font-open-sans);
         font-weight: 400;
@@ -200,6 +207,31 @@ const Header = () => {
     if (clickTitle in navigationData.navbarSublists) {
       setNavbarMobileList(navigationData.navbarSublists[clickTitle]);
     }
+  };
+
+  const renderSubmenuItems = (items: NavItem[]) => {
+    const rows = [];
+    for (let i = 0; i < items.length; i += 3) {
+      const row = items.slice(i, i + 3);
+      rows.push(
+        <div key={`row_${i}`} className="subMenuRow">
+          {row.map((item, idx) => (
+            <Link key={`${item.id}_${idx}`} id={item.id} href={item.link} passHref>
+              <div
+                role="button"
+                tabIndex={0}
+                className="navMobileItem SubItem"
+                onKeyDown={(e) => { if (e.key === "Enter") { setNavMobileDisplay('none'); } }}
+                onClick={() => setNavMobileDisplay('none')}
+              >
+                {item.name}
+              </div>
+            </Link>
+          ))}
+        </div>
+      );
+    }
+    return rows;
   };
 
   return (
@@ -283,19 +315,8 @@ const Header = () => {
                           {navMobileItem.name}
                         </div>
                       )}
-                      {navMobileItem.className === 'navMobileSubItem' && (
-                        <Link id={navMobileItem.id} href={navMobileItem.link} passHref>
-                          <div
-                            role="button"
-                            tabIndex={0}
-                            className="navMobileItem SubItem"
-                            onKeyDown={(e) => { if (e.key === "Enter") { setNavMobileDisplay('none'); } }}
-                            onClick={() => setNavMobileDisplay('none')}
-                          >
-                            {navMobileItem.name}
-                          </div>
-                        </Link>
-                      )}
+                      {navMobileItem.className === 'navMobileSubItem' && 
+                        renderSubmenuItems([navMobileItem])}
                       {navMobileItem.className === 'navMobileSubTitle' && (
                         <div className="navMobileItem">{navMobileItem.name}</div>
                       )}
