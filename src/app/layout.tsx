@@ -69,7 +69,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${openSans.variable} ${poppins.variable} ${lato.variable} ${inter.variable} ${nunitoSans.variable} ${nunito.variable} ${publicSans.variable} ${rubik.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${openSans.variable} ${poppins.variable} ${lato.variable} ${inter.variable} ${nunitoSans.variable} ${nunito.variable} ${publicSans.variable} ${rubik.variable} antialiased bg-white min-h-screen`}
       >
         <Header />
         {children}
