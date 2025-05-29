@@ -34,14 +34,12 @@ jobs:
       - name: Build React app
         run: npm run build
 
-      - name: Deploy to S3
-        uses: aws-actions/s3-sync@v1
-        with:
-          source: build
-          destination: s3://${{ secrets.DEV_S3_BUCKET }}
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get install -y awscli
 
+      - name: Deploy to S3 using AWS CLI
+        run: aws s3 sync build s3://${{ secrets.DEV_S3_BUCKET }} --delete
+    
       - name: Invalidate CloudFront cache (optional)
-        uses: aws-actions/aws-cloudfront-invalidate@v1
-        with:
-          distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
-          paths: "/*"
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
