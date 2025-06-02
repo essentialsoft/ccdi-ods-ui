@@ -22,6 +22,53 @@ const ALLOWED_IFRAME_DOMAINS = [
   // Add other trusted domains as needed
 ];
 
+// Add this function before the Post component
+export async function generateStaticParams() {
+  // Fetch all markdown files from GitHub at build time
+  const response = await fetch(
+    'https://api.github.com/repos/CBIIT/ccdi-ods-content/contents/pages',
+    {
+      headers: {
+        'Accept': 'application/vnd.github.v3+json',
+      }
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch directory structure');
+  }
+
+  const data = await response.json();
+  const paths: { slug: string[] }[] = [];
+
+  // Recursively fetch all .md files
+  async function fetchMarkdownFiles(items: any[], currentPath: string[] = []) {
+    for (const item of items) {
+      if (item.type === 'file' && item.name.endsWith('.md')) {
+        // Add path for markdown file (without .md extension)
+        paths.push({
+          slug: [...currentPath, item.name.replace('.md', '')]
+        });
+      } else if (item.type === 'dir') {
+        // Fetch contents of subdirectory
+        const dirResponse = await fetch(item.url, {
+          headers: {
+            'Accept': 'application/vnd.github.v3+json',
+          }
+        });
+        if (dirResponse.ok) {
+          const dirData = await dirResponse.json();
+          await fetchMarkdownFiles(dirData, [...currentPath, item.name]);
+        }
+      }
+    }
+  }
+
+  await fetchMarkdownFiles(data);
+  return paths;
+}
+
+
 function sanitizeIframe() {
   return (tree: any) => {
     visit(tree, 'element', (node) => {

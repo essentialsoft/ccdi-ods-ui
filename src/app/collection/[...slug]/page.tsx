@@ -25,6 +25,32 @@ async function fetchPostMetadata(url: string): Promise<string | undefined> {
   return data.title;
 }
 
+export async function generateStaticParams() {
+  // Fetch all possible paths from GitHub at build time
+  const response = await fetch(
+    'https://api.github.com/repos/CBIIT/ccdi-ods-content/contents/pages',
+    {
+      headers: {
+        'Accept': 'application/vnd.github.v3+json',
+      }
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch directory structure');
+  }
+
+  const data: GithubContent[] = await response.json();
+  
+  // Generate paths for both directories and files
+  const paths = data.map(item => ({
+    slug: [item.name]
+  }));
+
+  return paths;
+}
+
+
 async function fetchGithubPosts(slug: string): Promise<Post[]> {
 
   const response = await fetch(
