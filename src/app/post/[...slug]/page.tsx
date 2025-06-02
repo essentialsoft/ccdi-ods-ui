@@ -112,6 +112,7 @@ function sanitizeIframe() {
 }
 
 function rehypeCustomTheme() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (tree: any) => {
     visit(tree, 'element', (node) => {
       if (node.tagName === 'h1') {
@@ -214,6 +215,7 @@ function rehypeCustomTheme() {
 
 
 function rehypeCustomTheme2() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (tree: any) => {
     visit(tree, 'element', (node) => {
       if (node.tagName === 'h1') {
@@ -257,6 +259,7 @@ function rehypeCustomTheme2() {
         node.properties = node.properties || {};
         node.properties.className = ['text-xl', 'font-semibold', 'my-3', 'text-gray-700'];
       }
+
 
       // Lists
       if (node.tagName === 'ul') {
@@ -332,6 +335,7 @@ interface PostMetadata {
 
 // Update fetchContent to include typed metadata
 async function fetchContent(slug: string): Promise<{ metadata: PostMetadata; content: string }> {
+
   const response = await fetch(
     `https://api.github.com/repos/CBIIT/ccdi-ods-content/contents/pages/${slug}.md`,
     {
@@ -347,6 +351,7 @@ async function fetchContent(slug: string): Promise<{ metadata: PostMetadata; con
   }
   const content = await response.text();
 
+
   const { data: metadata, content: markdownContent } = matter(content);
   
 
@@ -354,6 +359,7 @@ async function fetchContent(slug: string): Promise<{ metadata: PostMetadata; con
     metadata: metadata as PostMetadata, 
     content: markdownContent 
   };
+
 }
 
 async function processMarkdown(content: string, slug: string) {
@@ -407,6 +413,7 @@ function extractHeadings(content: string): Heading[] {
   return headings;
 }
 
+
 // Remove the PageParams interface
 
 // Update the component signature
@@ -416,6 +423,7 @@ export default async function Post({
   params: any;
   searchParams?: any;
 }) {
+
   const slug = params.slug.join('/');
   const [collection, page] = params.slug;
   const { metadata, content } = await fetchContent(slug);

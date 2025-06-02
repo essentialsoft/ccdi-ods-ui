@@ -9,6 +9,7 @@ interface GithubContent {
   download_url: string;
 }
 
+
 interface Post {
   id: string;
   title: string;
@@ -51,6 +52,7 @@ export async function generateStaticParams() {
 
 
 async function fetchGithubPosts(slug: string): Promise<Post[]> {
+
   const response = await fetch(
     `https://api.github.com/repos/CBIIT/ccdi-ods-content/contents/pages/${slug}`,
     {
