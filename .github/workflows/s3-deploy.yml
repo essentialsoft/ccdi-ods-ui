@@ -36,11 +36,11 @@ jobs:
 
       - name: List build dir
         run: |
-          ls -l
-          ls -al ./next
+          ls -la
+      
 
       - name: Deploy to S3 using AWS CLI
-        run: aws s3 sync .next/build/ s3://${{ secrets.DEV_S3_BUCKET }} --delete
+        run: aws s3 sync build/ s3://${{ secrets.DEV_S3_BUCKET }} --delete
     
       - name: Invalidate CloudFront cache (optional)
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
