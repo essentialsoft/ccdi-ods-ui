@@ -35,7 +35,7 @@ jobs:
         run: npm run build
 
       - name: Export static files
-        run: npm run export  
+        run: npx next export  
 
       - name: Deploy to S3 using AWS CLI
         run: aws s3 sync out/ s3://${{ secrets.DEV_S3_BUCKET }} --delete
