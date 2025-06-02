@@ -33,9 +33,6 @@ jobs:
 
       - name: Build React app
         run: npm run build
-      
-      - name: Export static file
-        run: npm run export
 
       - name: List build dir
         run: |
