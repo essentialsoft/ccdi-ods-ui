@@ -1,8 +1,9 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import Fuse from 'fuse.js';
+import matter from 'gray-matter';
 
 // ==========================
 // Interfaces
@@ -18,7 +19,10 @@ interface GithubPost {
   name: string;
   path: string;
   type: string;
-  content?: string; // Added content property
+  content?: string;
+  metadata?: {
+    title?: string;
+  };
 }
 
 interface PostWithCollection extends GithubPost {
@@ -75,10 +79,12 @@ async function fetchPosts(collectionPath: string): Promise<GithubPost[]> {
         }
       );
       if (postResonse.ok) {
-        const content = await postResonse.text();
+        const rawContent = await postResonse.text();
+        const { data: metadata, content } = matter(rawContent);
         const post: GithubPost = {
           ...item,
           content,
+          metadata: metadata as { title?: string },
         };
         posts.push(post);
       }
@@ -91,7 +97,7 @@ async function fetchPosts(collectionPath: string): Promise<GithubPost[]> {
 // ==========================
 // SearchPage Component
 // ==========================
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
   const [collections, setCollections] = useState<GithubCollection[]>([]);
@@ -171,7 +177,7 @@ export default function SearchPage() {
       </form>
 
       <h1 className="text-4xl font-bold mb-6">Search Results</h1>
-      <p className="mb-6">Showing results for: "{query}"</p>
+      <p className="mb-6">Showing results for: &quot;{query}&quot;</p>
 
       {Object.keys(groupedResults).length === 0 ? (
         <p>No results found.</p>
@@ -191,7 +197,7 @@ export default function SearchPage() {
                       href={`/post/${collectionName}/${post.name.replace('.md', '')}`}
                       className="text-blue-600 hover:text-blue-800"
                     >
-                      {post.name.replace('.md', '').replace(/-/g, ' ')}
+                      {post.metadata?.title || post.name.replace('.md', '').replace(/-/g, ' ')}
                     </Link>
                   </li>
                 ))}
@@ -201,5 +207,13 @@ export default function SearchPage() {
         </div>
       )}
     </main>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<div className="max-w-4xl mx-auto p-6">Loading...</div>}>
+      <SearchContent />
+    </Suspense>
   );
 }

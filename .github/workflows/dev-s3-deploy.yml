@@ -3,7 +3,7 @@ name: Deploy React App to S3
 on:
   push:
     branches:
-      - dev
+      - yizhen
 
 jobs:
   build-and-deploy:
@@ -34,12 +34,13 @@ jobs:
       - name: Build React app
         run: npm run build
 
-      - name: Install AWS CLI
+      - name: List build dir
         run: |
-          sudo apt-get install -y awscli
+          ls -la
+      
 
       - name: Deploy to S3 using AWS CLI
-        run: aws s3 sync build s3://${{ secrets.DEV_S3_BUCKET }} --delete
+        run: aws s3 sync out/ s3://${{ secrets.DEV_S3_BUCKET }} --delete
     
       - name: Invalidate CloudFront cache (optional)
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DEV_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
