@@ -22,6 +22,53 @@ const ALLOWED_IFRAME_DOMAINS = [
   // Add other trusted domains as needed
 ];
 
+// Add this function before the Post component
+export async function generateStaticParams() {
+  // Fetch all markdown files from GitHub at build time
+  const response = await fetch(
+    'https://api.github.com/repos/CBIIT/ccdi-ods-content/contents/pages',
+    {
+      headers: {
+        'Accept': 'application/vnd.github.v3+json',
+      }
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch directory structure');
+  }
+
+  const data = await response.json();
+  const paths: { slug: string[] }[] = [];
+
+  // Recursively fetch all .md files
+  async function fetchMarkdownFiles(items: any[], currentPath: string[] = []) {
+    for (const item of items) {
+      if (item.type === 'file' && item.name.endsWith('.md')) {
+        // Add path for markdown file (without .md extension)
+        paths.push({
+          slug: [...currentPath, item.name.replace('.md', '')]
+        });
+      } else if (item.type === 'dir') {
+        // Fetch contents of subdirectory
+        const dirResponse = await fetch(item.url, {
+          headers: {
+            'Accept': 'application/vnd.github.v3+json',
+          }
+        });
+        if (dirResponse.ok) {
+          const dirData = await dirResponse.json();
+          await fetchMarkdownFiles(dirData, [...currentPath, item.name]);
+        }
+      }
+    }
+  }
+
+  await fetchMarkdownFiles(data);
+  return paths;
+}
+
+
 function sanitizeIframe() {
   return (tree: any) => {
     visit(tree, 'element', (node) => {
@@ -65,6 +112,7 @@ function sanitizeIframe() {
 }
 
 function rehypeCustomTheme() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (tree: any) => {
     visit(tree, 'element', (node) => {
       if (node.tagName === 'h1') {
@@ -167,6 +215,7 @@ function rehypeCustomTheme() {
 
 
 function rehypeCustomTheme2() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (tree: any) => {
     visit(tree, 'element', (node) => {
       if (node.tagName === 'h1') {
@@ -210,6 +259,7 @@ function rehypeCustomTheme2() {
         node.properties = node.properties || {};
         node.properties.className = ['text-xl', 'font-semibold', 'my-3', 'text-gray-700'];
       }
+
 
       // Lists
       if (node.tagName === 'ul') {
@@ -285,6 +335,7 @@ interface PostMetadata {
 
 // Update fetchContent to include typed metadata
 async function fetchContent(slug: string): Promise<{ metadata: PostMetadata; content: string }> {
+
   const response = await fetch(
     `https://api.github.com/repos/CBIIT/ccdi-ods-content/contents/pages/${slug}.md`,
     {
@@ -300,6 +351,7 @@ async function fetchContent(slug: string): Promise<{ metadata: PostMetadata; con
   }
   const content = await response.text();
 
+
   const { data: metadata, content: markdownContent } = matter(content);
   
 
@@ -307,6 +359,7 @@ async function fetchContent(slug: string): Promise<{ metadata: PostMetadata; con
     metadata: metadata as PostMetadata, 
     content: markdownContent 
   };
+
 }
 
 async function processMarkdown(content: string, slug: string) {
@@ -360,6 +413,7 @@ function extractHeadings(content: string): Heading[] {
   return headings;
 }
 
+
 // Remove the PageParams interface
 
 // Update the component signature
@@ -369,6 +423,7 @@ export default async function Post({
   params: any;
   searchParams?: any;
 }) {
+
   const slug = params.slug.join('/');
   const [collection, page] = params.slug;
   const { metadata, content } = await fetchContent(slug);
